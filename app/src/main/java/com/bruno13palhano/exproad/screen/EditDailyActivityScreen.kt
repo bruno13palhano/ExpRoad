@@ -21,23 +21,7 @@ import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
 fun EditDailyActivityScreen(
     dailyActivityId: Long,
     viewModel: EditDailyActivityViewModel,
-    onNavigateToMainScreen: () -> Unit
-) {
-    ExpRoadTheme {
-        Surface {
-            EditDailyActivityContent(
-                dailyActivityId = dailyActivityId,
-                viewModel = viewModel,
-                onNavigateToMainScreen = onNavigateToMainScreen
-            )
-        }
-    }
-}
-
-@Composable
-fun EditDailyActivityContent(
-    dailyActivityId: Long,
-    viewModel: EditDailyActivityViewModel,
+    onNavigateUp: () -> Unit,
     onNavigateToMainScreen: () -> Unit
 ) {
     val titleValue = remember { mutableStateOf("") }
@@ -59,96 +43,105 @@ fun EditDailyActivityContent(
         }.toString()
     }
 
-    Column(
-        modifier = Modifier.padding(4.dp)
-    ) {
-        UserInput(
-            value = titleValue.value,
-            label = "New title"
+    DefaultAppBar(
+        appBarTitle = "Edit Activity",
+        onNavigateUp = onNavigateUp
+    ) { paddingValues ->
+        Surface(
+            modifier = Modifier.padding(paddingValues)
         ) {
-            titleValue.value = it
-        }
-
-        Spacer(modifier = Modifier.padding(2.dp))
-
-        UserInput(
-            value = typeValue.value,
-            label = "New type"
-        ) {
-            typeValue.value = it
-        }
-
-        Spacer(modifier = Modifier.padding(2.dp))
-
-        UserInput(
-            value = descriptionValue.value,
-            label = "New description"
-        ) {
-            descriptionValue.value = it
-        }
-
-        Spacer(modifier = Modifier.padding(2.dp))
-
-        Row(
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            TimePickerTest { _, hour, minute ->
-                viewModel.updateDailyActivityTime(hour, minute, dailyActivityId)
-            }
-
-            Spacer(modifier = Modifier.padding(4.dp))
-
-            UserInput(
-                value = timeValue.value,
-                label = "New time",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            Column(
+                modifier = Modifier.padding(4.dp)
             ) {
-                timeValue.value = it
-            }
-        }
+                UserInput(
+                    value = titleValue.value,
+                    label = "New title"
+                ) {
+                    titleValue.value = it
+                }
 
-        Spacer(modifier = Modifier.padding(2.dp))
+                Spacer(modifier = Modifier.padding(2.dp))
 
-        Row(
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            DatePickerTest { _, year, month, day ->
-                viewModel.updateDailyActivityDate(day, month, year, dailyActivityId)
-            }
+                UserInput(
+                    value = typeValue.value,
+                    label = "New type"
+                ) {
+                    typeValue.value = it
+                }
 
-            Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(modifier = Modifier.padding(2.dp))
 
-            UserInput(
-                value = dateValue.value,
-                label = "New date",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            ) {
-                dateValue.value = it
-            }
-        }
+                UserInput(
+                    value = descriptionValue.value,
+                    label = "New description"
+                ) {
+                    descriptionValue.value = it
+                }
 
-        Row(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            FloatingActionButton(
-                onClick = onNavigateToMainScreen,
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Done,
-                    contentDescription = "Action done"
-                )
+                Spacer(modifier = Modifier.padding(2.dp))
+
+                Row(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TimePickerTest { _, hour, minute ->
+                        viewModel.updateDailyActivityTime(hour, minute, dailyActivityId)
+                    }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    UserInput(
+                        value = timeValue.value,
+                        label = "New time",
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    ) {
+                        timeValue.value = it
+                    }
+                }
+
+                Spacer(modifier = Modifier.padding(2.dp))
+
+                Row(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    DatePickerTest { _, year, month, day ->
+                        viewModel.updateDailyActivityDate(day, month, year, dailyActivityId)
+                    }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    UserInput(
+                        value = dateValue.value,
+                        label = "New date",
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    ) {
+                        dateValue.value = it
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    FloatingActionButton(
+                        onClick = onNavigateToMainScreen,
+                        backgroundColor = MaterialTheme.colors.primary
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Done,
+                            contentDescription = "Action done"
+                        )
+                    }
+                }
             }
         }
     }
