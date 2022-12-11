@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.model.DailyActivity
-import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
 import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 
 
