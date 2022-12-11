@@ -65,6 +65,9 @@ fun NavigationContent(
             EditDailyActivityScreen(
                 dailyActivityId = dailyActivityId,
                 viewModel = editDailyViewModel,
+                onNavigateUp = {
+                    navController.navigateUp()
+                },
                 onNavigateToMainScreen = {
                     navController.navigate(Routes.MAINSCREEN.name)
                 }
