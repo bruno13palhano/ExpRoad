@@ -126,7 +126,7 @@ fun EditDailyActivityScreen(
 
                 Row(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(12.dp)
                         .fillMaxWidth()
                         .fillMaxHeight(),
                     horizontalArrangement = Arrangement.End,

@@ -83,7 +83,7 @@ fun NewDailyActivityScreen(
 
                 Row(
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(12.dp)
                         .fillMaxWidth()
                         .fillMaxHeight(),
                     horizontalArrangement = Arrangement.End,
@@ -101,7 +101,10 @@ fun NewDailyActivityScreen(
                         },
                         backgroundColor = MaterialTheme.colors.primary
                     ) {
-                        Icon(Icons.Filled.Done, "Action done")
+                        Icon(
+                            Icons.Filled.Done,
+                            "Action done"
+                        )
                     }
                 }
             }
