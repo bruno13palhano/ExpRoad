@@ -6,7 +6,6 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.R
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.model.DailyActivity
-import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
 import java.util.*
 
 enum class Routes {
