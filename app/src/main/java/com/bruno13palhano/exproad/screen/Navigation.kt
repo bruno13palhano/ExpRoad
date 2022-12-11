@@ -17,7 +17,7 @@ import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 fun NavigationContent(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "mainScreen",
+    startDestination: String = Routes.MAINSCREEN.name,
     newDailyViewModel: NewDailyActivityScreenViewModel,
     mainScreenViewModel: MainScreenViewModel,
     editDailyViewModel: EditDailyActivityViewModel
@@ -27,35 +27,35 @@ fun NavigationContent(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable("mainScreen") {
+        composable(Routes.MAINSCREEN.name) {
             MainScreen(
                 viewModel = mainScreenViewModel,
                 onItemClick = { menuItemRoute ->
-                    navController.navigate("menuItems/${menuItemRoute}")
+                    navController.navigate(menuItemRoute)
                 },
                 onNavigateToEditDailyActivityScreen = { dailyActivityId ->
-                    navController.navigate("editDailyActivityScreen/${dailyActivityId}")
+                    navController.navigate("${Routes.EDITACTIVITYSCREEN.name}/${dailyActivityId}")
                 },
                 onNavigateToNewDailyActivityScreen = {
-                    navController.navigate("newDailyActivityScreen")
+                    navController.navigate(Routes.NEWACTIVITYSCREEN.name)
                 }
             )
         }
 
-        composable("newDailyActivityScreen") {
+        composable(Routes.NEWACTIVITYSCREEN.name) {
             NewDailyActivityScreen(
                 viewModel = newDailyViewModel,
                 onNavigateUp = {
                     navController.navigateUp()
                 },
                 onNavigateToMainScreen = {
-                    navController.navigate("mainScreen")
+                    navController.navigate(Routes.MAINSCREEN.name)
                 }
             )
         }
 
         composable(
-            "editDailyActivityScreen/{dailyActivityId}",
+            "${Routes.EDITACTIVITYSCREEN.name}/{dailyActivityId}",
             arguments = listOf(navArgument("dailyActivityId") {
                 type = NavType.LongType
             })
@@ -66,60 +66,58 @@ fun NavigationContent(
                 dailyActivityId = dailyActivityId,
                 viewModel = editDailyViewModel,
                 onNavigateToMainScreen = {
-                    navController.navigate("mainScreen")
+                    navController.navigate(Routes.MAINSCREEN.name)
                 }
             )
         }
 
         composable(
-            route = "menuItems/{menuItem}"
+            route = "{menuItem}"
         ) {
             val menuItem = it.arguments?.getString("menuItem")
 
             when (menuItem) {
-                "email" -> navController.navigate("menuItems/email")
-                "alarm" -> navController.navigate("menuItems/alarm")
-                "analytics" -> navController.navigate("menuItems/analytics")
-                "profile" -> navController.navigate("menuItems/profile")
-                "settings" -> navController.navigate("menuItems/settings")
-                "help" -> navController.navigate("menuItems/help")
+                Routes.EMAIL.name -> navController.navigate(Routes.EMAIL.name)
+                Routes.ALARM.name -> navController.navigate(Routes.ALARM.name)
+                Routes.ANALYTICS.name -> navController.navigate(Routes.ANALYTICS.name)
+                Routes.PROFILE.name -> navController.navigate(Routes.PROFILE.name)
+                Routes.SETTINGS.name -> navController.navigate(Routes.SETTINGS.name)
+                Routes.HELP.name -> navController.navigate(Routes.HELP.name)
             }
         }
 
-        // TODO: remover a raiz das rotas dos menus (menuItems/), colocar as rotas na UtilCompose como final ou Enum.
-        //  Extrair as strings hardcoded para o String resources( facilitará as mudanças de idiomas)
         composable(
-            route = "menuItems/email"
+            route = Routes.EMAIL.name
         ) {
             Text(text = "There's nothing to see here yet on Email Screen.")
         }
 
         composable(
-            route = "menuItems/alarm"
+            route = Routes.ALARM.name
         ) {
             Text(text = "There's nothing to see here yet on Alarm Screen.")
         }
 
         composable(
-            route = "menuItems/analytics"
+            route = Routes.ANALYTICS.name
         ) {
             Text(text = "There's nothing to see here yet on Analytics Screen.")
         }
 
         composable(
-            route = "menuItems/profile"
+            route = Routes.PROFILE.name
         ) {
             Text(text = "There's nothing to see here yet on Profile Screen.")
         }
 
         composable(
-            route = "menuItems/settings"
+            route = Routes.SETTINGS.name
         ) {
             Text(text = "There's nothing to see here yet on Settings Screen.")
         }
 
         composable(
-            route = "menuItems/help"
+            route = Routes.HELP.name
         ) {
             Text(text = "There's nothing to see here yet on Help Screen.")
         }

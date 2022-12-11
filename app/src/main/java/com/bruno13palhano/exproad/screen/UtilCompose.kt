@@ -26,6 +26,13 @@ import com.bruno13palhano.exproad.model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
 import java.util.*
 
+enum class Routes {
+    EMAIL, ALARM, ANALYTICS,
+    PROFILE, SETTINGS, HELP,
+    EDITACTIVITYSCREEN, NEWACTIVITYSCREEN,
+    MAINSCREEN
+}
+
 @Composable
 fun DefaultAppBar(
     appBarTitle: String,
