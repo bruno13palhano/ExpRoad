@@ -15,7 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
+import com.bruno13palhano.exproad.model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
+import java.util.*
 
 @Composable
 fun EditDailyActivityScreen(
@@ -24,6 +26,9 @@ fun EditDailyActivityScreen(
     onNavigateUp: () -> Unit,
     onNavigateToMainScreen: () -> Unit
 ) {
+    var time: Long
+    var date: Date
+
     val titleValue = remember { mutableStateOf("") }
     val typeValue = remember { mutableStateOf("") }
     val descriptionValue = remember { mutableStateOf("") }
@@ -41,6 +46,9 @@ fun EditDailyActivityScreen(
         dateValue.value = it.value?.activityDate?.time?.let { date ->
             viewModel.formatDate(date)
         }.toString()
+
+        time = it.value?.activityTime ?: 0
+        date = it.value?.activityDate ?: Date()
     }
 
     DefaultAppBar(
@@ -58,7 +66,6 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_title_label)
                 ) {
                     titleValue.value = it
-                    viewModel.updateDailyActivityTitle(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -68,7 +75,6 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_type_label)
                 ) {
                     typeValue.value = it
-                    viewModel.updateDailyActivityType(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -78,7 +84,6 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_description)
                 ) {
                     descriptionValue.value = it
-                    viewModel.updateDailyActivityDescription(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -90,7 +95,8 @@ fun EditDailyActivityScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     TimePickerTest { _, hour, minute ->
-                        viewModel.updateDailyActivityTime(hour, minute, dailyActivityId)
+                        time = viewModel.getCalendarTime(hour, minute)
+                        timeValue.value = viewModel.formatTime(time)
                     }
 
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -113,7 +119,8 @@ fun EditDailyActivityScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     DatePickerTest { _, year, month, day ->
-                        viewModel.updateDailyActivityDate(day, month, year, dailyActivityId)
+                        date = viewModel.getCalendarDate(day, month, year)
+                        dateValue.value = viewModel.formatDate(date.time)
                     }
 
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -136,7 +143,17 @@ fun EditDailyActivityScreen(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     FloatingActionButton(
-                        onClick = onNavigateToMainScreen,
+                        onClick = {
+                            viewModel.updateDailyActivity(DailyActivity(
+                                activityId = dailyActivityId,
+                                activityTitle = titleValue.value,
+                                activityType = typeValue.value,
+                                activityDescription = descriptionValue.value,
+                                activityTime = time,
+                                activityDate = date
+                            ))
+                            onNavigateToMainScreen()
+                        },
                         backgroundColor = MaterialTheme.colors.primary
                     ) {
                         Icon(
