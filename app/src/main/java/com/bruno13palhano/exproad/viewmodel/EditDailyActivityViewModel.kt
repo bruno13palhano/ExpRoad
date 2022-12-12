@@ -12,65 +12,31 @@ class EditDailyActivityViewModel(
     private val repository: DailyActivityRepository
 ) : ViewModel() {
 
-    var dateFormatted: String = ""
-
     fun getDailyActivity(dailyActivityId: Long): LiveData<DailyActivity> {
         return repository.get(dailyActivityId)
     }
 
     fun updateDailyActivity(dailyActivity: DailyActivity) {
         viewModelScope.launch {
-            repository.addDailyActivity(dailyActivity)
+            repository.updateDailyActivity(dailyActivity)
         }
     }
 
-    fun updateDailyActivityTitle(newTitle: String, activityId: Long) {
-        viewModelScope.launch {
-            repository.updateDailyActivityTitle(newTitle, activityId)
-        }
-    }
-
-    fun updateDailyActivityType(newType: String, activityId: Long) {
-        viewModelScope.launch {
-            repository.updateDailyActivityType(newType, activityId)
-        }
-    }
-
-    fun updateDailyActivityDescription(newDescription: String, activityId: Long) {
-        viewModelScope.launch {
-            repository.updateDailyActivityDescription(newDescription, activityId)
-        }
-    }
-
-    fun updateDailyActivityTime(hour: Int, minute: Int, activityId: Long) {
-        val calendar = getCalendarTime(hour, minute)
-        viewModelScope.launch {
-            repository.updateDailyActivityTime(calendar.timeInMillis, activityId)
-        }
-    }
-
-    fun updateDailyActivityDate(day: Int, month: Int, year: Int, activityId: Long) {
-        val calendar = getCalendarDate(day, month, year)
-        viewModelScope.launch {
-            repository.updateDailyActivityDate(calendar.timeInMillis, activityId)
-        }
-    }
-
-    private fun getCalendarTime(hour: Int, minute: Int): Calendar {
+    fun getCalendarTime(hour: Int, minute: Int): Long {
         val calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = hour
         calendar[Calendar.MINUTE] = minute
 
-        return calendar
+        return calendar.timeInMillis
     }
 
-    private fun getCalendarDate(day: Int, month: Int, year: Int): Calendar {
+    fun getCalendarDate(day: Int, month: Int, year: Int): Date {
         val calendar = Calendar.getInstance()
         calendar[Calendar.DAY_OF_MONTH] = day
         calendar[Calendar.MONTH] = month
         calendar[Calendar.YEAR] = year
 
-        return calendar
+        return calendar.time
     }
 
     fun formatTime(time: Long): String {
