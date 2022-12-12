@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
@@ -108,7 +109,9 @@ fun MainDrawerScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopAppBar(
-            title = { Text("ExpRoad") },
+            title = {
+                Text(stringResource(id = R.string.app_name))
+            },
             navigationIcon = {
                 Button(
                     onClick = {
@@ -122,7 +125,7 @@ fun MainDrawerScreen(
                 ) {
                     Icon(
                         Icons.Filled.Menu,
-                        "Open close menu"
+                        stringResource(id = R.string.drawer_menu_description)
                     )
                 }
             }
@@ -134,7 +137,7 @@ fun MainDrawerScreen(
             ) {
                 Icon(
                     Icons.Filled.Add,
-                    "Add new daily activity"
+                    stringResource(id = R.string.add_new_activity_button_description)
                 )
             }
         },
@@ -191,15 +194,16 @@ fun DrawerMainContent(
             Image(
                 modifier = Modifier
                     .size(200.dp)
-                    .clip(shape = CircleShape)
-                ,
+                    .clip(shape = CircleShape),
                 painter = painterResource(id = R.drawable.path),
-                contentDescription = "Profile Image",
+                contentDescription = stringResource(id = R.string.profile_image_description),
             )
         }
 
         item {
-            Text(text = "someone@gmail.com")
+            Text(
+                text = stringResource(id = R.string.email_description)
+            )
             Spacer(modifier = Modifier.padding(bottom = 72.dp))
         }
 
@@ -249,48 +253,48 @@ private fun prepareNavigationDrawerItems(): List<MenuDrawerItem> {
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_email_24),
-            label = "Email",
-            route = "email",
+            label = stringResource(id = R.string.email_label),
+            route = Routes.EMAIL.name,
         )
     )
 
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_alarm_24),
-            label = "Alarm",
-            route = "alarm"
+            label = stringResource(id = R.string.alarm_label),
+            route = Routes.ALARM.name
         )
     )
 
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_analytics_24),
-            label = "Analytics",
-            route = "analytics"
+            label = stringResource(id = R.string.analytics_label),
+            route = Routes.ANALYTICS.name
         )
     )
 
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_person_24),
-            label = "Profile",
-            route = "profile"
+            label = stringResource(id = R.string.profile_label),
+            route = Routes.PROFILE.name
         )
     )
 
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_settings_24),
-            label = "Settings",
-            route = "settings"
+            label = stringResource(id = R.string.settings_label),
+            route = Routes.SETTINGS.name
         )
     )
 
     itemList.add(
         MenuDrawerItem(
             image = painterResource(id = R.drawable.ic_baseline_help_24),
-            label = "Help",
-            route = "help"
+            label = stringResource(id = R.string.help_label),
+            route = Routes.HELP.name
         )
     )
 

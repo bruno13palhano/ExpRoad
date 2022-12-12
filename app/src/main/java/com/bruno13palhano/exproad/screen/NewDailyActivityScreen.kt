@@ -8,8 +8,10 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.bruno13palhano.exproad.R
 import com.bruno13palhano.exproad.model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 
@@ -27,7 +29,7 @@ fun NewDailyActivityScreen(
     val dateValue = remember { mutableStateOf("") }
 
     DefaultAppBar(
-        appBarTitle = "New Activity",
+        appBarTitle = stringResource(id = R.string.new_activity_screen),
         onNavigateUp = onNavigateUp
     ) { paddingValues ->
         Surface(
@@ -38,7 +40,7 @@ fun NewDailyActivityScreen(
             ) {
                 UserInput(
                     value = titleValue.value,
-                    label = "Enter title"
+                    label = stringResource(id = R.string.input_title_label)
                 ) {
                     titleValue.value = it
                 }
@@ -47,7 +49,7 @@ fun NewDailyActivityScreen(
 
                 UserInput(
                     value = typeValue.value,
-                    label = "Enter type"
+                    label = stringResource(id = R.string.input_type_label)
                 ) {
                     typeValue.value = it
                 }
@@ -56,7 +58,7 @@ fun NewDailyActivityScreen(
 
                 UserInput(
                     value = descriptionValue.value,
-                    label = "Enter description"
+                    label = stringResource(id = R.string.input_description_label)
                 ) {
                     descriptionValue.value = it
                 }
@@ -65,7 +67,7 @@ fun NewDailyActivityScreen(
 
                 UserInput(
                     value = timeValue.value,
-                    label = "Enter time",
+                    label = stringResource(id = R.string.input_time_label),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 ) {
                     timeValue.value = it
@@ -75,7 +77,7 @@ fun NewDailyActivityScreen(
 
                 UserInput(
                     value = dateValue.value,
-                    label = "Enter date",
+                    label = stringResource(id = R.string.input_date_label),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 ) {
                     dateValue.value = it
@@ -103,7 +105,7 @@ fun NewDailyActivityScreen(
                     ) {
                         Icon(
                             Icons.Filled.Done,
-                            "Action done"
+                            stringResource(id = R.string.done_button_description)
                         )
                     }
                 }

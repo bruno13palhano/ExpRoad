@@ -8,9 +8,10 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
+import com.bruno13palhano.exproad.R
 import kotlinx.coroutines.launch
 
 @Preview
@@ -21,7 +22,11 @@ fun MainDrawerScreenTest() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopAppBar(
-            title = { Text(text = "ExpRoad")},
+            title = {
+                Text(
+                    text = stringResource(id = R.string.app_name)
+                )
+            },
             navigationIcon = {
                 Button(
                     onClick = {
@@ -35,7 +40,7 @@ fun MainDrawerScreenTest() {
                 ) {
                     Icon(
                         Icons.Filled.Menu,
-                        "Open close menu"
+                        stringResource(id = R.string.drawer_menu_description)
                     )
                 }
             },
@@ -48,13 +53,15 @@ fun MainDrawerScreenTest() {
             ) {
                 Icon(
                     Icons.Filled.Add,
-                    contentDescription = "Add new daily activity"
+                    contentDescription = stringResource(id = R.string.add_new_activity_button_description)
                 )
             }
         },
         drawerContent = {
             Column(modifier = Modifier.padding(4.dp)) {
-                Text(text = "Test from drawerContent")
+                Text(
+                    text = "Test from drawerContent"
+                )
             }
         },
     ) { paddingValues ->

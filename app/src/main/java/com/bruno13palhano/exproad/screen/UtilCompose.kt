@@ -18,17 +18,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bruno13palhano.exproad.R
 import com.bruno13palhano.exproad.model.DailyActivity
 import java.util.*
 
 enum class Routes {
     EMAIL, ALARM, ANALYTICS,
     PROFILE, SETTINGS, HELP,
-    EDITACTIVITYSCREEN, NEWACTIVITYSCREEN,
-    MAINSCREEN
+    EDIT_ACTIVITY_SCREEN, NEW_ACTIVITY_SCREEN,
+    MAIN_SCREEN, DAILY_ACTIVITY_ID, MENU_ITEM
 }
 
 @Composable
@@ -50,7 +52,7 @@ fun DefaultAppBar(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(id = R.string.back_button_description),
                         )
                     }
                 }
@@ -149,13 +151,16 @@ fun DatePickerTest(
             },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primary)
         ) {
-            Text(text = "Date", color = Color.White)
+            Text(
+                text = stringResource(id = R.string.date_label),
+                color = Color.White
+            )
 
             Spacer(modifier = Modifier.padding(2.dp))
 
             Image(
-                painter = painterResource(com.bruno13palhano.exproad.R.drawable.ic_baseline_calendar_today_24),
-                contentDescription = "calendar"
+                painter = painterResource(R.drawable.ic_baseline_calendar_today_24),
+                contentDescription = stringResource(id = R.string.date_button_description)
             )
         }
     }
@@ -189,13 +194,16 @@ fun TimePickerTest(
             },
             colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primary),
         ) {
-            Text(text = "Time", color = Color.White)
+            Text(
+                text = stringResource(id = R.string.time_label),
+                color = Color.White
+            )
 
             Spacer(modifier = Modifier.padding(2.dp))
 
             Image(
-                painter = painterResource(com.bruno13palhano.exproad.R.drawable.ic_baseline_access_time_24),
-                contentDescription = "clock"
+                painter = painterResource(R.drawable.ic_baseline_access_time_24),
+                contentDescription = stringResource(id = R.string.time_button_description)
             )
         }
     }

@@ -17,7 +17,7 @@ import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 fun NavigationContent(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Routes.MAINSCREEN.name,
+    startDestination: String = Routes.MAIN_SCREEN.name,
     newDailyViewModel: NewDailyActivityScreenViewModel,
     mainScreenViewModel: MainScreenViewModel,
     editDailyViewModel: EditDailyActivityViewModel
@@ -27,40 +27,40 @@ fun NavigationContent(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Routes.MAINSCREEN.name) {
+        composable(Routes.MAIN_SCREEN.name) {
             MainScreen(
                 viewModel = mainScreenViewModel,
                 onItemClick = { menuItemRoute ->
                     navController.navigate(menuItemRoute)
                 },
                 onNavigateToEditDailyActivityScreen = { dailyActivityId ->
-                    navController.navigate("${Routes.EDITACTIVITYSCREEN.name}/${dailyActivityId}")
+                    navController.navigate("${Routes.EDIT_ACTIVITY_SCREEN.name}/${dailyActivityId}")
                 },
                 onNavigateToNewDailyActivityScreen = {
-                    navController.navigate(Routes.NEWACTIVITYSCREEN.name)
+                    navController.navigate(Routes.NEW_ACTIVITY_SCREEN.name)
                 }
             )
         }
 
-        composable(Routes.NEWACTIVITYSCREEN.name) {
+        composable(Routes.NEW_ACTIVITY_SCREEN.name) {
             NewDailyActivityScreen(
                 viewModel = newDailyViewModel,
                 onNavigateUp = {
                     navController.navigateUp()
                 },
                 onNavigateToMainScreen = {
-                    navController.navigate(Routes.MAINSCREEN.name)
+                    navController.navigate(Routes.MAIN_SCREEN.name)
                 }
             )
         }
 
         composable(
-            "${Routes.EDITACTIVITYSCREEN.name}/{dailyActivityId}",
-            arguments = listOf(navArgument("dailyActivityId") {
+            "${Routes.EDIT_ACTIVITY_SCREEN.name}/{${Routes.DAILY_ACTIVITY_ID.name}}",
+            arguments = listOf(navArgument(Routes.DAILY_ACTIVITY_ID.name) {
                 type = NavType.LongType
             })
         ) {
-            val dailyActivityId = it.arguments?.getLong("dailyActivityId") ?: 0
+            val dailyActivityId = it.arguments?.getLong(Routes.DAILY_ACTIVITY_ID.name) ?: 0
 
             EditDailyActivityScreen(
                 dailyActivityId = dailyActivityId,
@@ -69,15 +69,15 @@ fun NavigationContent(
                     navController.navigateUp()
                 },
                 onNavigateToMainScreen = {
-                    navController.navigate(Routes.MAINSCREEN.name)
+                    navController.navigate(Routes.MAIN_SCREEN.name)
                 }
             )
         }
 
         composable(
-            route = "{menuItem}"
+            route = "{${Routes.MENU_ITEM.name}}"
         ) {
-            val menuItem = it.arguments?.getString("menuItem")
+            val menuItem = it.arguments?.getString(Routes.MENU_ITEM.name)
 
             when (menuItem) {
                 Routes.EMAIL.name -> navController.navigate(Routes.EMAIL.name)

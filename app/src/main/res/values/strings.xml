@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">ExpRoad</string>
+
+<!--  Screen Titles  -->
+    <string name="new_activity_screen">New Activity</string>
+    <string name="edit_activity_screen">Edit Activity</string>
+
+<!-- Inputs labels  -->
+    <string name="input_title_label">Enter title</string>
+    <string name="input_type_label">Enter type</string>
+    <string name="input_description_label">Enter description</string>
+    <string name="input_time_label">Enter time</string>
+    <string name="input_date_label">Enter Date</string>
+    <string name="input_new_title_label">New title</string>
+    <string name="input_new_type_label">New type</string>
+    <string name="input_new_description">New description</string>
+    <string name="input_new_time_label">New time</string>
+    <string name="input_new_date_label">New date</string>
+
+<!--  Drawer items names  -->
+    <string name="email_label">Email</string>
+    <string name="alarm_label">Label</string>
+    <string name="analytics_label">Analytics</string>
+    <string name="profile_label">Profile</string>
+    <string name="settings_label">Settings</string>
+    <string name="help_label">Help</string>
+    <string name="date_label">Date</string>
+    <string name="time_label">Time</string>
+
+<!--  Content Description  -->
+    <string name="drawer_menu_description">Open close menu</string>
+    <string name="add_new_activity_button_description">Add new daily activity</string>
+    <string name="profile_image_description">Profile image</string>
+    <string name="email_description">someone@gmail.com</string>
+    <string name="back_button_description">Back</string>
+    <string name="date_button_description">Calendar</string>
+    <string name="time_button_description">Clock</string>
+    <string name="done_button_description">Action done</string>
 </resources>
