@@ -117,28 +117,26 @@ fun MessageRow(
 fun DatePickerTest(
     onChange: (datePicker: DatePicker, year: Int, month: Int, day: Int) -> Unit
 ) {
-    //Fetching the local Context
-    val mContext = LocalContext.current
+    val context = LocalContext.current
 
-    val mYear: Int
-    val mMonth: Int
-    val mDay: Int
+    val year: Int
+    val month: Int
+    val day: Int
 
-    //Initializing a Calendar
     val mCalendar = Calendar.getInstance()
 
-    mYear = mCalendar.get(Calendar.YEAR)
-    mMonth = mCalendar.get(Calendar.MONTH)
-    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+    year = mCalendar.get(Calendar.YEAR)
+    month = mCalendar.get(Calendar.MONTH)
+    day = mCalendar.get(Calendar.DAY_OF_MONTH)
 
     mCalendar.time = Date()
 
     val mDatePickerDialog = DatePickerDialog(
-        mContext,
+        context,
         onChange,
-        mYear,
-        mMonth,
-        mDay
+        year,
+        month,
+        day
     )
 
     Column(
@@ -170,17 +168,17 @@ fun DatePickerTest(
 fun TimePickerTest(
     onChange: (timePicker: TimePicker, hour: Int, minute: Int) -> Unit
 ) {
-    val mContext = LocalContext.current
+    val context = LocalContext.current
 
-    val mCalendar = Calendar.getInstance()
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
+    val calendar = Calendar.getInstance()
+    val hour = calendar[Calendar.HOUR_OF_DAY]
+    val minute = calendar[Calendar.MINUTE]
 
     val mTimePickerDialog = TimePickerDialog(
-        mContext,
+        context,
         onChange,
-        mHour,
-        mMinute,
+        hour,
+        minute,
         true
     )
 
@@ -204,21 +202,6 @@ fun TimePickerTest(
             Image(
                 painter = painterResource(R.drawable.ic_baseline_access_time_24),
                 contentDescription = stringResource(id = R.string.time_button_description)
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DrawerContent() {
-    LazyColumn(
-
-    ) {
-        item {
-            Text(
-                modifier = Modifier.padding(4.dp),
-                text = "Email"
             )
         }
     }
