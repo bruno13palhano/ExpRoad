@@ -58,6 +58,7 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_title_label)
                 ) {
                     titleValue.value = it
+                    viewModel.updateDailyActivityTitle(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -67,6 +68,7 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_type_label)
                 ) {
                     typeValue.value = it
+                    viewModel.updateDailyActivityType(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
@@ -76,6 +78,7 @@ fun EditDailyActivityScreen(
                     label = stringResource(id = R.string.input_new_description)
                 ) {
                     descriptionValue.value = it
+                    viewModel.updateDailyActivityDescription(it, dailyActivityId)
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
