@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.exproad.model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
+import java.util.*
 
 
 @Composable
@@ -22,6 +23,9 @@ fun NewDailyActivityScreen(
     onNavigateUp: () -> Unit,
     onNavigateToMainScreen: () -> Unit
 ) {
+    var time = 0L;
+    var date = Date()
+
     val titleValue = remember { mutableStateOf("") }
     val typeValue = remember { mutableStateOf("") }
     val descriptionValue = remember { mutableStateOf("") }
@@ -65,22 +69,50 @@ fun NewDailyActivityScreen(
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                UserInput(
-                    value = timeValue.value,
-                    label = stringResource(id = R.string.input_time_label),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                Row(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    timeValue.value = it
+                    TimePickerTest { _, hour, minute ->
+                        time = viewModel.timeStringToLong(hour, minute)
+                        timeValue.value = viewModel.formatTime(time)
+                    }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    UserInput(
+                        value = timeValue.value,
+                        label = stringResource(id = R.string.input_time_label),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    ) {
+                        timeValue.value = it
+                    }
                 }
 
                 Spacer(modifier = Modifier.padding(2.dp))
 
-                UserInput(
-                    value = dateValue.value,
-                    label = stringResource(id = R.string.input_date_label),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                Row(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    dateValue.value = it
+                    DatePickerTest { _, year, month, day ->
+                        date = viewModel.dateStringToDate(day, month, year)
+                        dateValue.value = viewModel.formatDate(date.time)
+                    }
+
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    UserInput(
+                        value = dateValue.value,
+                        label = stringResource(id = R.string.input_date_label),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    ) {
+                        dateValue.value = it
+                    }
                 }
 
                 Row(
@@ -97,7 +129,8 @@ fun NewDailyActivityScreen(
                                 activityTitle = titleValue.value,
                                 activityType = typeValue.value,
                                 activityDescription = descriptionValue.value,
-                                //missing the others parameters
+                                activityTime = time,
+                                activityDate = date
                             ))
                             onNavigateToMainScreen.invoke()
                         },
