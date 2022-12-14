@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Surface
 import androidx.lifecycle.ViewModelProvider
-import com.bruno13palhano.exproad.dataaccess.DailyActivityDatabase
-import com.bruno13palhano.exproad.repository.DailyActivityRepositoryImpl
+import com.bruno13palhano.activity_repository.DailyActivityRepositoryFactory
 import com.bruno13palhano.exproad.screen.NavigationContent
 import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
 import com.bruno13palhano.exproad.viewmodel.*
@@ -15,8 +14,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val dao = DailyActivityDatabase.getInstance(this).dailyActivityDao
-        val repository = DailyActivityRepositoryImpl(dao)
+        val repository = DailyActivityRepositoryFactory(this).createDailyActivityRepositoryDB()
 
         val newDailyViewModelFactory = NewDailyActivityScreenViewModelFactory(repository)
         val newDailyViewModel = ViewModelProvider(this, newDailyViewModelFactory)[NewDailyActivityScreenViewModel::class.java]

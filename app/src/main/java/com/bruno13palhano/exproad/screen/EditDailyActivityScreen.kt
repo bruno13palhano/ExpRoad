@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
-import com.bruno13palhano.exproad.model.DailyActivity
+import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
 import java.util.*
 
@@ -144,14 +144,16 @@ fun EditDailyActivityScreen(
                 ) {
                     FloatingActionButton(
                         onClick = {
-                            viewModel.updateDailyActivity(DailyActivity(
+                            viewModel.updateDailyActivity(
+                                DailyActivity(
                                 activityId = dailyActivityId,
                                 activityTitle = titleValue.value,
                                 activityType = typeValue.value,
                                 activityDescription = descriptionValue.value,
                                 activityTime = time,
                                 activityDate = date
-                            ))
+                            )
+                            )
                             onNavigateToMainScreen()
                         },
                         backgroundColor = MaterialTheme.colors.primary

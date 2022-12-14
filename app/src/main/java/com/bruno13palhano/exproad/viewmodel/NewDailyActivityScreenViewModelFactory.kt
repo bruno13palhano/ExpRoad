@@ -2,7 +2,7 @@ package com.bruno13palhano.exproad.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bruno13palhano.exproad.repository.DailyActivityRepository
+import com.bruno13palhano.activity_repository.DailyActivityRepository
 
 class NewDailyActivityScreenViewModelFactory(
         private val repository: DailyActivityRepository

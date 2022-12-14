@@ -2,8 +2,8 @@ package com.bruno13palhano.exproad.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.bruno13palhano.exproad.model.DailyActivity
-import com.bruno13palhano.exproad.repository.DailyActivityRepository
+import com.bruno13palhano.activity_model.DailyActivity
+import com.bruno13palhano.activity_repository.DailyActivityRepository
 
 class MainScreenViewModel(
     private val repository: DailyActivityRepository

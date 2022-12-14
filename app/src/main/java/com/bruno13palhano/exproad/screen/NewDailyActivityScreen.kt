@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
-import com.bruno13palhano.exproad.model.DailyActivity
+import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 import java.util.*
 
@@ -125,13 +125,15 @@ fun NewDailyActivityScreen(
                 ) {
                     FloatingActionButton(
                         onClick = {
-                            viewModel.addDailyActivity(DailyActivity(
+                            viewModel.addDailyActivity(
+                                DailyActivity(
                                 activityTitle = titleValue.value,
                                 activityType = typeValue.value,
                                 activityDescription = descriptionValue.value,
                                 activityTime = time,
                                 activityDate = date
-                            ))
+                            )
+                            )
                             onNavigateToMainScreen.invoke()
                         },
                         backgroundColor = MaterialTheme.colors.primary

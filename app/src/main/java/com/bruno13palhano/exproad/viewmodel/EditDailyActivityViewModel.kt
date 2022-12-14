@@ -3,13 +3,12 @@ package com.bruno13palhano.exproad.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bruno13palhano.exproad.model.DailyActivity
-import com.bruno13palhano.exproad.repository.DailyActivityRepository
+import com.bruno13palhano.activity_model.DailyActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
 class EditDailyActivityViewModel(
-    private val repository: DailyActivityRepository
+    private val repository: com.bruno13palhano.activity_repository.DailyActivityRepository
 ) : ViewModel() {
 
     fun getDailyActivity(dailyActivityId: Long): LiveData<DailyActivity> {

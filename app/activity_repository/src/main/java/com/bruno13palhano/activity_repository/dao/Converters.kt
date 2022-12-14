@@ -1,9 +1,11 @@
-package com.bruno13palhano.exproad.dataaccess
+package com.bruno13palhano.activity_repository.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.TypeConverter
+import com.bruno13palhano.activity_model.DailyActivity
 import java.util.*
 
-class Converters {
+internal class Converters {
 
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
@@ -12,6 +14,7 @@ class Converters {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
-        return date?.time?.toLong()
+        return date?.time
     }
+
 }

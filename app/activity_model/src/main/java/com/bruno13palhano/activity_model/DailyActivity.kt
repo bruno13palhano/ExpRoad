@@ -1,4 +1,4 @@
-package com.bruno13palhano.exproad.model
+package com.bruno13palhano.activity_model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
-import com.bruno13palhano.exproad.model.DailyActivity
+import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
 import com.bruno13palhano.exproad.viewmodel.MainScreenViewModel
 import kotlinx.coroutines.launch
