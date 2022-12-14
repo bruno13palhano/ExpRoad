@@ -1,8 +1,6 @@
 package com.bruno13palhano.activity_repository.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.TypeConverter
-import com.bruno13palhano.activity_model.DailyActivity
 import java.util.*
 
 internal class Converters {
