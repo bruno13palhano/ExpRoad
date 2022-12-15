@@ -1,5 +1,6 @@
 package com.bruno13palhano.exproad.screen
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +26,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
-import com.bruno13palhano.exproad.viewmodel.MainScreenViewModel
+import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
 import kotlinx.coroutines.launch
 
 @Preview(showBackground = true)
@@ -77,24 +80,26 @@ fun MainPreview() {
 
 @Composable
 fun MainScreen(
-    viewModel: MainScreenViewModel,
+//    viewModel: MainScreenViewModel,
+    context: Context,
+    owner: ViewModelStoreOwner,
     onItemClick: (String) -> Unit,
     onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit,
     onNavigateToNewDailyActivityScreen: () -> Unit
 
 ) {
-    val dailyActivityList = viewModel.getAll()
+    val viewModel = DailyActivityViewModelFactory(context, owner).createMainViewModel()
+    val dailyActivityList = remember { viewModel.getAll() }
 
-    dailyActivityList.observeAsState().let {
-        it.value?.let { dailyList ->
-            MainDrawerScreen(
-                dailyActivities = dailyList,
-                onItemClick = onItemClick,
-                onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen,
-                onNavigateToNewDailyActivityScreen = onNavigateToNewDailyActivityScreen
-            )
-        }
+    dailyActivityList.observeAsState().value?.let {
+        MainDrawerScreen(
+            dailyActivities = it,
+            onItemClick = onItemClick,
+            onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen,
+            onNavigateToNewDailyActivityScreen = onNavigateToNewDailyActivityScreen
+        )
     }
+
 }
 
 @Composable
@@ -161,15 +166,23 @@ fun MainScreenContent(
     dailyActivities: List<DailyActivity>,
     onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit
 ) {
-    LazyColumn {
-        items(dailyActivities) { dailyActivity ->
-            MessageRow(
-                dailyActivity = dailyActivity,
-                onClick = {
-                    onNavigateToEditDailyActivityScreen.invoke(dailyActivity.activityId)
-                }
-            )
-        }
+
+    LazyColumn() {
+        items(
+            count = dailyActivities.size,
+            key = {
+                dailyActivities[it].activityId
+            },
+            itemContent = { index ->
+                val dailyActivity = dailyActivities[index]
+                MessageRow(
+                    dailyActivity = dailyActivity,
+                    onClick = {
+                        onNavigateToEditDailyActivityScreen.invoke(dailyActivity.activityId)
+                    }
+                )
+            }
+        )
     }
 }
 
@@ -195,7 +208,7 @@ fun DrawerMainContent(
                 modifier = Modifier
                     .size(200.dp)
                     .clip(shape = CircleShape),
-                painter = painterResource(id = R.drawable.path),
+                painter = painterResource(id = R.drawable.profile_picture),
                 contentDescription = stringResource(id = R.string.profile_image_description),
             )
         }
@@ -330,7 +343,7 @@ fun DrawerMainContentPreview() {
                     .size(200.dp)
                     .clip(shape = CircleShape)
                 ,
-                painter = painterResource(id = R.drawable.path),
+                painter = painterResource(id = R.drawable.profile_picture),
                 contentDescription = "Profile Image",
             )
         }

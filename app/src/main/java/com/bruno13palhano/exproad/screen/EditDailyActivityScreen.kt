@@ -1,5 +1,6 @@
 package com.bruno13palhano.exproad.screen
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -11,21 +12,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
+import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
 import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
 import java.util.*
 
 @Composable
 fun EditDailyActivityScreen(
     dailyActivityId: Long,
-    viewModel: EditDailyActivityViewModel,
+    context: Context,
+    owner: ViewModelStoreOwner,
     onNavigateUp: () -> Unit,
     onNavigateToMainScreen: () -> Unit
 ) {
+
+    val viewModel = DailyActivityViewModelFactory(context, owner).createEditDailyActivityViewModel()
+
     var time: Long
     var date: Date
 

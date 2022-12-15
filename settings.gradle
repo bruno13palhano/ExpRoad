@@ -16,3 +16,4 @@ rootProject.name = "ExpRoad"
 include ':app'
 include ':app:activity_repository'
 include ':app:activity_model'
+include ':app:activity_analytics'

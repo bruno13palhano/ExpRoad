@@ -1,8 +1,10 @@
 package com.bruno13palhano.exproad.screen
 
+import android.content.Context
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,11 +18,10 @@ import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 @Composable
 fun NavigationContent(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     startDestination: String = Routes.MAIN_SCREEN.name,
-    newDailyViewModel: NewDailyActivityScreenViewModel,
-    mainScreenViewModel: MainScreenViewModel,
-    editDailyViewModel: EditDailyActivityViewModel
+    context: Context,
+    owner: ViewModelStoreOwner
 ) {
     NavHost(
         modifier = modifier,
@@ -29,7 +30,8 @@ fun NavigationContent(
     ) {
         composable(Routes.MAIN_SCREEN.name) {
             MainScreen(
-                viewModel = mainScreenViewModel,
+                context = context,
+                owner = owner,
                 onItemClick = { menuItemRoute ->
                     navController.navigate(menuItemRoute)
                 },
@@ -44,7 +46,8 @@ fun NavigationContent(
 
         composable(Routes.NEW_ACTIVITY_SCREEN.name) {
             NewDailyActivityScreen(
-                viewModel = newDailyViewModel,
+                context = context,
+                owner = owner,
                 onNavigateUp = {
                     navController.navigateUp()
                 },
@@ -64,13 +67,14 @@ fun NavigationContent(
 
             EditDailyActivityScreen(
                 dailyActivityId = dailyActivityId,
-                viewModel = editDailyViewModel,
                 onNavigateUp = {
                     navController.navigateUp()
                 },
                 onNavigateToMainScreen = {
                     navController.navigate(Routes.MAIN_SCREEN.name)
-                }
+                },
+                context = context,
+                owner = owner
             )
         }
 
