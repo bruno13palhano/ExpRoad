@@ -1,6 +1,7 @@
 package com.bruno13palhano.exproad.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.activity_repository.DailyActivityRepositoryFactory
@@ -30,5 +31,12 @@ class DailyActivityViewModelFactory(
             MainScreenViewModelFactory(repositoryFactory.createDailyActivityRepositoryDB())
 
         return ViewModelProvider(owner, mainViewModel)[MainScreenViewModel::class.java]
+    }
+
+    fun createDailyActivityAnalyticsViewModel(): ViewModel {
+        val analyticsViewModel =
+            DailyActivityAnalyticsViewModelFactory(repositoryFactory.createDailyActivityAnalyticsRepositoryDB())
+
+        return ViewModelProvider(owner, analyticsViewModel)[DailyActivityAnalyticsViewModel::class.java]
     }
 }
