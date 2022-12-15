@@ -89,7 +89,7 @@ fun MainScreen(
 
 ) {
     val viewModel = DailyActivityViewModelFactory(context, owner).createMainViewModel()
-    var dailyActivityList:List<DailyActivity> = remember { emptyList() }
+    var dailyActivityList: List<DailyActivity> = remember { emptyList() }
 
     val dailyList = viewModel.getAll()
 
@@ -114,6 +114,7 @@ fun MainDrawerScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopAppBar(
@@ -155,6 +156,15 @@ fun MainDrawerScreen(
             )
         }
     ) { paddingValues ->
+
+        LaunchedEffect(key1 = Unit) {
+            scope.launch {
+                scaffoldState.drawerState
+                    .apply {
+                        if (isOpen) close()
+                    }
+            }
+        }
 
         Spacer(modifier = Modifier.padding(paddingValues))
         MainScreenContent(
