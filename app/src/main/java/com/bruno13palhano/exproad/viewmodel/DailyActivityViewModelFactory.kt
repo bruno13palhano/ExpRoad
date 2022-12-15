@@ -33,7 +33,7 @@ class DailyActivityViewModelFactory(
         return ViewModelProvider(owner, mainViewModel)[MainScreenViewModel::class.java]
     }
 
-    fun createDailyActivityAnalyticsViewModel(): ViewModel {
+    fun createDailyActivityAnalyticsViewModel(): DailyActivityAnalyticsViewModel {
         val analyticsViewModel =
             DailyActivityAnalyticsViewModelFactory(repositoryFactory.createDailyActivityAnalyticsRepositoryDB())
 
