@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bruno13palhano.activity_repository.DailyActivityRepository
 
 class NewDailyActivityScreenViewModelFactory(
-        private val repository: DailyActivityRepository
-    ) : ViewModelProvider.Factory {
+    private val repository: DailyActivityRepository
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NewDailyActivityScreenViewModel::class.java)) {
