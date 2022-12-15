@@ -16,13 +16,11 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
-import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 import java.util.*
 
 
 @Composable
 fun NewDailyActivityScreen(
-//    viewModel: NewDailyActivityScreenViewModel,
     context: Context,
     owner: ViewModelStoreOwner,
     onNavigateUp: () -> Unit,
