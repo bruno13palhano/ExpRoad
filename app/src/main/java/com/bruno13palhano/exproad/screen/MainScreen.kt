@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -80,7 +81,6 @@ fun MainPreview() {
 
 @Composable
 fun MainScreen(
-//    viewModel: MainScreenViewModel,
     context: Context,
     owner: ViewModelStoreOwner,
     onItemClick: (String) -> Unit,
@@ -89,17 +89,20 @@ fun MainScreen(
 
 ) {
     val viewModel = DailyActivityViewModelFactory(context, owner).createMainViewModel()
-    val dailyActivityList = remember { viewModel.getAll() }
+    var dailyActivityList:List<DailyActivity> = remember { emptyList() }
 
-    dailyActivityList.observeAsState().value?.let {
-        MainDrawerScreen(
-            dailyActivities = it,
-            onItemClick = onItemClick,
-            onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen,
-            onNavigateToNewDailyActivityScreen = onNavigateToNewDailyActivityScreen
-        )
+    val dailyList = viewModel.getAll()
+
+    dailyList.observeAsState().value?.let {
+        dailyActivityList = it
     }
 
+    MainDrawerScreen(
+        dailyActivities = dailyActivityList,
+        onItemClick = onItemClick,
+        onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen,
+        onNavigateToNewDailyActivityScreen = onNavigateToNewDailyActivityScreen
+    )
 }
 
 @Composable
