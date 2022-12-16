@@ -11,6 +11,7 @@ import com.bruno13palhano.activity_model.DailyActivity
 @TypeConverters(Converters::class)
 internal abstract class DailyActivityDatabase : RoomDatabase() {
     abstract val dailyActivityDao: DailyActivityDao
+    abstract val dailyActivityAnalyticsDao: DailyActivityAnalyticsDao
 
     companion object {
         @Volatile
