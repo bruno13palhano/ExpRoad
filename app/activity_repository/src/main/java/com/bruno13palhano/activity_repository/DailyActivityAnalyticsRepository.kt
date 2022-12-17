@@ -6,5 +6,8 @@ import java.util.*
 
 interface DailyActivityAnalyticsRepository {
     fun getByTitle(activityTitle: String): LiveData<List<DailyActivity>>
+    fun getByType(activityType: String): LiveData<List<DailyActivity>>
+    fun getByDescription(activityDescription: String): LiveData<List<DailyActivity>>
     fun getByDate(initialDate: Date, finalDate: Date): LiveData<List<DailyActivity>>
+    fun getTop10ByHours(): LiveData<List<DailyActivity>>
 }
