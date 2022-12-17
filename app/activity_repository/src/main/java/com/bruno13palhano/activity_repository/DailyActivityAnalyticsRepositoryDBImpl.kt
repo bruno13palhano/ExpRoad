@@ -14,7 +14,19 @@ internal class DailyActivityAnalyticsRepositoryDBImpl(
         return dao.getAnalyticsByTitle(activityTitle)
     }
 
+    override fun getByType(activityType: String): LiveData<List<DailyActivity>> {
+        return dao.getAnalyticsByType(activityType)
+    }
+
+    override fun getByDescription(activityDescription: String): LiveData<List<DailyActivity>> {
+        return dao.getAnalyticsByDescription(activityDescription)
+    }
+
     override fun getByDate(initialDate: Date, finalDate: Date): LiveData<List<DailyActivity>> {
         return dao.getAnalyticsByDate(initialDate, finalDate)
+    }
+
+    override fun getTop10ByHours(): LiveData<List<DailyActivity>> {
+        return dao.getTop10ByHours()
     }
 }
