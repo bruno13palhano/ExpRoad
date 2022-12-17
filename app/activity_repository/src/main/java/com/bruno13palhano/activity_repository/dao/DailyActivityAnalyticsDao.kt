@@ -24,5 +24,5 @@ internal interface DailyActivityAnalyticsDao {
     @Query("SELECT * FROM daily_activity_table daily1 WHERE 9=(" +
             "SELECT COUNT(DISTINCT(daily2.activity_time)) FROM daily_activity_table daily2 WHERE " +
             "daily2.activity_time > daily1.activity_time)")
-    fun getTop10Hours(): LiveData<List<DailyActivity>>
+    fun getTop10ByHours(): LiveData<List<DailyActivity>>
 }
