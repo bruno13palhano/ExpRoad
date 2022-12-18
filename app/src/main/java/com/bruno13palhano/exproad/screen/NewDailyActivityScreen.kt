@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
 import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
+import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 import java.util.*
 
 
@@ -29,7 +30,7 @@ fun NewDailyActivityScreen(
 
     val viewModel = DailyActivityViewModelFactory(context, owner).createNewDailyActivityViewModel()
 
-    var time = 0L;
+    var time = 0L
     var date = Date()
 
     val titleValue = remember { mutableStateOf("") }
@@ -45,113 +46,152 @@ fun NewDailyActivityScreen(
         Surface(
             modifier = Modifier.padding(paddingValues)
         ) {
-            Column(
-                modifier = Modifier.padding(4.dp)
-            ) {
-                UserInput(
-                    value = titleValue.value,
-                    label = stringResource(id = R.string.input_title_label)
-                ) {
-                    titleValue.value = it
-                }
-
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                UserInput(
-                    value = typeValue.value,
-                    label = stringResource(id = R.string.input_type_label)
-                ) {
-                    typeValue.value = it
-                }
-
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                UserInput(
-                    value = descriptionValue.value,
-                    label = stringResource(id = R.string.input_description_label)
-                ) {
-                    descriptionValue.value = it
-                }
-
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                Row(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    TimePickerTest { _, hour, minute ->
-                        time = viewModel.timeStringToLong(hour, minute)
-                        timeValue.value = viewModel.formatTime(time)
-                    }
-
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    UserInput(
-                        value = timeValue.value,
-                        label = stringResource(id = R.string.input_time_label),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    ) {
-                        timeValue.value = it
-                    }
-                }
-
-                Spacer(modifier = Modifier.padding(2.dp))
-
-                Row(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    DatePickerTest { _, year, month, day ->
-                        date = viewModel.dateStringToDate(day, month, year)
-                        dateValue.value = viewModel.formatDate(date.time)
-                    }
-
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    UserInput(
-                        value = dateValue.value,
-                        label = stringResource(id = R.string.input_date_label),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    ) {
-                        dateValue.value = it
-                    }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    FloatingActionButton(
-                        onClick = {
-                            viewModel.addDailyActivity(
-                                DailyActivity(
-                                activityTitle = titleValue.value,
-                                activityType = typeValue.value,
-                                activityDescription = descriptionValue.value,
-                                activityTime = time,
-                                activityDate = date
-                            )
-                            )
-                            onNavigateToMainScreen.invoke()
-                        },
-                        backgroundColor = MaterialTheme.colors.primary
-                    ) {
-                        Icon(
-                            Icons.Filled.Done,
-                            stringResource(id = R.string.done_button_description)
-                        )
-                    }
-                }
-            }
+            NewDailyActivityContent(
+                activityTitle = titleValue.value,
+                activityType = typeValue.value,
+                activityDescription = descriptionValue.value,
+                activityTime = timeValue.value,
+                activityDate = dateValue.value,
+                viewModel = viewModel,
+                time = time,
+                date = date,
+                onActivityTitleChange = { titleValue.value = it },
+                onActivityTypeChange = { typeValue.value = it },
+                onActivityDescriptionChange = { descriptionValue.value = it },
+                onActivityTimeChange = { timeValue.value = it },
+                onActivityDateChange = { dateValue.value = it },
+                onTimeChange = { hour, minute ->
+                    time = viewModel.timeStringToLong(hour, minute)
+                    timeValue.value = viewModel.formatTime(time)
+                },
+                onDateChange = { day, month, year ->
+                    date = viewModel.dateStringToDate(day, month, year)
+                    dateValue.value = viewModel.formatDate(date)
+                },
+                onNavigateToMainScreen = onNavigateToMainScreen
+            )
         }
     }
 }
 
+@Composable
+fun NewDailyActivityContent(
+    activityTitle: String,
+    activityType: String,
+    activityDescription: String,
+    activityTime: String,
+    activityDate:String,
+    time: Long,
+    date: Date,
+    viewModel: NewDailyActivityScreenViewModel,
+    onActivityTitleChange: (String) -> Unit,
+    onActivityTypeChange: (String) -> Unit,
+    onActivityDescriptionChange: (String) -> Unit,
+    onActivityTimeChange: (String) -> Unit,
+    onActivityDateChange: (String) -> Unit,
+    onTimeChange: (hour: Int, minute: Int) -> Unit,
+    onDateChange: (day: Int, month: Int, year: Int) -> Unit,
+    onNavigateToMainScreen: () -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(4.dp)
+    ) {
+        UserInput(
+            value = activityTitle,
+            label = stringResource(id = R.string.input_title_label),
+            change = onActivityTitleChange
+        )
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        UserInput(
+            value = activityType,
+            label = stringResource(id = R.string.input_type_label),
+            change = onActivityTypeChange
+        )
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        UserInput(
+            value = activityDescription,
+            label = stringResource(id = R.string.input_description_label),
+            change = onActivityDescriptionChange
+        )
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TimePickerTest { _, hour, minute ->
+                onTimeChange(hour, minute)
+            }
+
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            UserInput(
+                value = activityTime,
+                label = stringResource(id = R.string.input_time_label),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                enable = false,
+                change = onActivityTimeChange
+            )
+        }
+
+        Spacer(modifier = Modifier.padding(2.dp))
+
+        Row(
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            DatePickerTest { _, year, month, day ->
+                onDateChange(day, month, year)
+            }
+
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            UserInput(
+                value = activityDate,
+                label = stringResource(id = R.string.input_date_label),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                enable = false,
+                change = onActivityDateChange
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.addDailyActivity(
+                        DailyActivity(
+                            activityTitle = activityTitle,
+                            activityType = activityType,
+                            activityDescription = activityDescription,
+                            activityTime = time,
+                            activityDate = date
+                        )
+                    )
+                    onNavigateToMainScreen.invoke()
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            ) {
+                Icon(
+                    Icons.Filled.Done,
+                    stringResource(id = R.string.done_button_description)
+                )
+            }
+        }
+    }
+}
