@@ -67,6 +67,7 @@ fun UserInput(
     keyboardOptions: KeyboardOptions = KeyboardOptions(
         keyboardType = KeyboardType.Text
     ),
+    enable: Boolean = true,
     change: (String) -> Unit
 ) {
     TextField(
@@ -74,7 +75,8 @@ fun UserInput(
         value = value,
         onValueChange = change,
         label = { Text(text = label) },
-        keyboardOptions = keyboardOptions
+        keyboardOptions = keyboardOptions,
+        enabled = enable
     )
 }
 
