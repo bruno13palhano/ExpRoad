@@ -42,9 +42,9 @@ class NewDailyActivityScreenViewModel(
                 "${calendar[Calendar.MINUTE]}"
     }
 
-    fun formatDate(date: Long): String {
+    fun formatDate(date: Date): String {
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = date
+        calendar.time = date
 
         return "${calendar[Calendar.DAY_OF_MONTH]}/" +
                "${calendar[Calendar.MONTH]}/" +
