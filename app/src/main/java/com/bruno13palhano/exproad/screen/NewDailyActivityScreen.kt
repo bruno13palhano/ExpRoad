@@ -52,7 +52,6 @@ fun NewDailyActivityScreen(
                 activityDescription = descriptionValue.value,
                 activityTime = timeValue.value,
                 activityDate = dateValue.value,
-                viewModel = viewModel,
                 time = time,
                 date = date,
                 onActivityTitleChange = { titleValue.value = it },
@@ -68,6 +67,9 @@ fun NewDailyActivityScreen(
                     date = viewModel.dateStringToDate(day, month, year)
                     dateValue.value = viewModel.formatDate(date)
                 },
+                onAddActivity = {
+                    viewModel.addDailyActivity(it)
+                },
                 onNavigateToMainScreen = onNavigateToMainScreen
             )
         }
@@ -80,10 +82,9 @@ fun NewDailyActivityContent(
     activityType: String,
     activityDescription: String,
     activityTime: String,
-    activityDate:String,
+    activityDate: String,
     time: Long,
     date: Date,
-    viewModel: NewDailyActivityScreenViewModel,
     onActivityTitleChange: (String) -> Unit,
     onActivityTypeChange: (String) -> Unit,
     onActivityDescriptionChange: (String) -> Unit,
@@ -91,6 +92,7 @@ fun NewDailyActivityContent(
     onActivityDateChange: (String) -> Unit,
     onTimeChange: (hour: Int, minute: Int) -> Unit,
     onDateChange: (day: Int, month: Int, year: Int) -> Unit,
+    onAddActivity: (dailyActivity: DailyActivity) -> Unit,
     onNavigateToMainScreen: () -> Unit
 ) {
     Column(
@@ -174,7 +176,7 @@ fun NewDailyActivityContent(
         ) {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addDailyActivity(
+                    onAddActivity(
                         DailyActivity(
                             activityTitle = activityTitle,
                             activityType = activityType,
