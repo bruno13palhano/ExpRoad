@@ -91,10 +91,10 @@ fun MainScreen(
     val viewModel = DailyActivityViewModelFactory(context, owner).createMainViewModel()
     var dailyActivityList: List<DailyActivity> = remember { emptyList() }
 
-    val dailyList = viewModel.getAll()
+    val dailyActivities = viewModel.getAll()
 
-    dailyList.observeAsState().value?.let {
-        dailyActivityList = it
+    dailyActivities.observeAsState().value?.let { dailyList ->
+        dailyActivityList = dailyList
     }
 
     MainDrawerScreen(
