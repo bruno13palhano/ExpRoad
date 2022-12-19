@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.bruno13palhano.activity_model.DailyActivity
+import com.bruno13palhano.activity_repository.model.DailyActivityImpl
 
-@Database(entities = [DailyActivity::class], version = 1, exportSchema = false)
+@Database(entities = [DailyActivityImpl::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 internal abstract class DailyActivityDatabase : RoomDatabase() {
     abstract val dailyActivityDao: DailyActivityDao
