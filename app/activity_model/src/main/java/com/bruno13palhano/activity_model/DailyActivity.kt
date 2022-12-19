@@ -22,7 +22,7 @@ data class DailyActivity(
     var activityDescription: String = "",
 
     @ColumnInfo(name = "activity_time")
-    var activityTime: Long = 0L,
+    var activityTime: Long = 10800000L,
 
     @ColumnInfo(name = "activity_date")
     var activityDate: Date = Date(),
