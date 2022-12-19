@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
+import com.bruno13palhano.activity_model.defaultTime
 import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
-import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
 import java.util.*
 
 
@@ -30,7 +30,7 @@ fun NewDailyActivityScreen(
 
     val viewModel = DailyActivityViewModelFactory(context, owner).createNewDailyActivityViewModel()
 
-    var time = 0L
+    var time = defaultTime
     var date = Date()
 
     val titleValue = remember { mutableStateOf("") }
