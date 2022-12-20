@@ -1,6 +1,7 @@
 package com.bruno13palhano.exproad.screen
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,76 +9,32 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
-import com.bruno13palhano.exproad.ui.theme.ExpRoadTheme
 import com.bruno13palhano.exproad.viewmodel.DailyActivityViewModelFactory
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-@Preview(showBackground = true)
-@Composable
-fun MainPreview() {
-    val list = listOf<DailyActivity>(
-        DailyActivity(
-            activityTitle = "Head First Java",
-            activityType = "Programming Language"
-        ),
-        DailyActivity(
-            activityTitle = "Head First Kotlin",
-            activityType = "Programming Language"
-        ),
-        DailyActivity(
-            activityTitle = "Head First Android",
-            activityType = "Programming Language"
-        ),
-        DailyActivity(
-            activityTitle = "Head First SQL",
-            activityType = "Programming Language"
-        ),
-        DailyActivity(
-            activityTitle = "Android Compose",
-            activityType = "Android Development"
-        ),
-        DailyActivity(
-            activityTitle = "Live Data and Room Database",
-            activityType = "Android Development"
-        ),
-        DailyActivity(
-            activityTitle = "Clean Architecture",
-            activityType = "Software Architecture"
-        ),
-        DailyActivity(
-            activityTitle = "Design Patterns with Java",
-            activityType = "Software Architecture"
-        ),
-    )
-
-    ExpRoadTheme {
-        Surface {
-            MainScreenContent(list, {})
-        }
-    }
-}
 
 @Composable
 fun MainScreen(
@@ -105,6 +62,7 @@ fun MainScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainDrawerScreen(
     dailyActivities: List<DailyActivity>,
@@ -112,75 +70,29 @@ fun MainDrawerScreen(
     onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit,
     onNavigateToNewDailyActivityScreen: () -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { TopAppBar(
-            title = {
-                Text(stringResource(id = R.string.app_name))
-            },
-            navigationIcon = {
-                Button(
-                    onClick = {
-                        scope.launch {
-                            scaffoldState.drawerState
-                                .apply {
-                                    if (isClosed) open() else close()
-                                }
-                        }
-                    }
-                ) {
-                    Icon(
-                        Icons.Filled.Menu,
-                        stringResource(id = R.string.drawer_menu_description)
-                    )
-                }
-            }
-        )},
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToNewDailyActivityScreen,
-                backgroundColor = MaterialTheme.colors.primary
-            ) {
-                Icon(
-                    Icons.Filled.Add,
-                    stringResource(id = R.string.add_new_activity_button_description)
-                )
-            }
-        },
-        drawerContent = {
-            DrawerMainContent(
-                onItemClick = onItemClick
-            )
-        }
-    ) { paddingValues ->
-
-        LaunchedEffect(key1 = Unit) {
-            scope.launch {
-                scaffoldState.drawerState
-                    .apply {
-                        if (isOpen) close()
-                    }
-            }
-        }
-
-        Spacer(modifier = Modifier.padding(paddingValues))
-        MainScreenContent(
-            dailyActivities = dailyActivities,
-            onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen
-        )
-    }
+    DrawerMainContentMD3(
+        dailyActivities = dailyActivities,
+        onItemClick = onItemClick,
+        onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen,
+        onNavigateToNewDailyActivityScreen = onNavigateToNewDailyActivityScreen,
+        drawerState = drawerState,
+        scope = scope,
+        scrollBehavior = scrollBehavior
+    )
 }
 
 @Composable
 fun MainScreenContent(
     dailyActivities: List<DailyActivity>,
+    paddingValues: PaddingValues,
     onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit
 ) {
 
-    LazyColumn() {
+    LazyColumn(modifier = Modifier.padding(paddingValues)) {
         items(
             count = dailyActivities.size,
             key = {
@@ -205,8 +117,8 @@ fun DrawerMainContent(
 ) {
     val itemList = prepareNavigationDrawerItems()
     val gradientColors = listOf(
-        Color(MaterialTheme.colors.background.value),
-        Color(MaterialTheme.colors.primary.value))
+        Color(Color.White.value),
+        Color(androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer.value))
 
     LazyColumn(
         modifier = Modifier
@@ -338,8 +250,8 @@ data class MenuDrawerItem(
 fun DrawerMainContentPreview() {
     val itemList = prepareNavigationDrawerItems()
     val gradientColors = listOf(
-        Color(MaterialTheme.colors.background.value),
-        Color(MaterialTheme.colors.primary.value))
+        Color(MaterialTheme.colorScheme.background.value),
+        Color(MaterialTheme.colorScheme.primary.value))
 
     LazyColumn(
         modifier = Modifier
@@ -373,4 +285,144 @@ fun DrawerMainContentPreview() {
             )
         }
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DrawerMainContentMD3(
+    dailyActivities: List<DailyActivity>,
+    onItemClick: (String) -> Unit,
+    onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit,
+    onNavigateToNewDailyActivityScreen: () -> Unit,
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    scrollBehavior: TopAppBarScrollBehavior
+) {
+    BackHandler(enabled = drawerState.isOpen) {
+        scope.launch {
+            drawerState.close()
+        }
+    }
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                DrawerMainContent {
+                    onItemClick(it)
+                    scope.launch {
+                        drawerState.close()
+                    }
+                }
+            }
+        },
+    ) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                LargeTopAppBar(
+                    title = {
+                        Text(
+                            text = stringResource(id = R.string.app_name),
+                            fontSize = 28.sp,
+                            color = Color.White
+                        )
+                    },
+                    navigationIcon = {
+                        androidx.compose.material3.IconButton(
+                            onClick = {
+                                scope.launch {
+                                    if(drawerState.isOpen) {
+                                        drawerState.close()
+                                    } else {
+                                        drawerState.open()
+                                    }
+                                }
+                            }
+                        ) {
+                            androidx.compose.material3.Icon(
+                                imageVector = Icons.Filled.Menu,
+                                contentDescription = stringResource(id = R.string.drawer_menu_description)
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    scrollBehavior = scrollBehavior
+                )
+            },
+            floatingActionButton =  {
+                androidx.compose.material3.ExtendedFloatingActionButton(
+                    onClick = onNavigateToNewDailyActivityScreen,
+                    containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Icon(
+                        Icons.Filled.Add,
+                        stringResource(id = R.string.add_new_activity_button_description)
+                    )
+                }
+            }
+
+        ) { paddingValues ->
+            MainScreenContent(
+                dailyActivities = dailyActivities,
+                paddingValues = paddingValues,
+                onNavigateToEditDailyActivityScreen = onNavigateToEditDailyActivityScreen
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+fun DrawerTest() {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+// icons to mimic drawer destinations
+    val items = listOf(Icons.Default.Favorite, Icons.Default.Face, Icons.Default.Email)
+    val selectedItem = remember { mutableStateOf(items[0]) }
+    BackHandler(enabled = drawerState.isOpen) {
+        scope.launch {
+            drawerState.close()
+        }
+    }
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet {
+                Spacer(Modifier.height(12.dp))
+                items.forEach { item ->
+                    NavigationDrawerItem(
+                        icon = { androidx.compose.material3.Icon(item, contentDescription = null) },
+                        label = { androidx.compose.material3.Text(item.name) },
+                        selected = item == selectedItem.value,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            selectedItem.value = item
+                        },
+                        modifier = Modifier.padding(horizontal = 12.dp)
+                    )
+                }
+            }
+        },
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = if (drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
+                Spacer(Modifier.height(20.dp))
+                androidx.compose.material3.Button(onClick = { scope.launch { drawerState.open() } }) {
+                    androidx.compose.material3.Text("Click to open")
+                }
+            }
+        }
+    )
 }
