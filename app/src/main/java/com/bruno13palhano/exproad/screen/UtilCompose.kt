@@ -8,9 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,35 +33,35 @@ enum class Routes {
     MAIN_SCREEN, DAILY_ACTIVITY_ID, MENU_ITEM
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultAppBar(
     appBarTitle: String,
     onNavigateUp: () -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                title = { Text(text = appBarTitle) },
+            LargeTopAppBar(
+                title = { Text(text = appBarTitle)},
                 navigationIcon = {
-                    Button(
-                        onClick = onNavigateUp
-                    ) {
+                    IconButton(onClick = onNavigateUp) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.back_button_description),
+                            contentDescription = stringResource(id = R.string.back_button_description)
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
             )
         },
         content = content
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserInput(
     value: String,
@@ -70,7 +72,7 @@ fun UserInput(
     enable: Boolean = true,
     change: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         value = value,
         onValueChange = change,
@@ -80,19 +82,19 @@ fun UserInput(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageRow(
     dailyActivity: DailyActivity,
     onClick: () -> Unit
 ) {
-    Card(
+    OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(2.dp)
             .height(100.dp),
-        elevation = 2.dp,
+        elevation = CardDefaults.outlinedCardElevation(),
         shape = RoundedCornerShape(20.dp),
         onClick = onClick
     ) {
@@ -143,11 +145,14 @@ fun DatePickerTest(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(
+        OutlinedButton(
             onClick = {
                 mDatePickerDialog.show()
             },
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primary)
+            colors = ButtonDefaults.buttonColors(
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
         ) {
             Text(
                 text = stringResource(id = R.string.date_label),
@@ -186,11 +191,14 @@ fun TimePickerTest(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Button(
+        OutlinedButton(
             onClick = {
                 mTimePickerDialog.show()
             },
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primary),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
         ) {
             Text(
                 text = stringResource(id = R.string.time_label),

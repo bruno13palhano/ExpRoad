@@ -2,8 +2,9 @@ package com.bruno13palhano.exproad.screen
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bruno13palhano.exproad.R
@@ -156,7 +158,8 @@ fun EditDailyActivityContent(
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             TimePickerTest { _, hour, minute ->
                 onTimeChange(hour, minute)
@@ -179,7 +182,8 @@ fun EditDailyActivityContent(
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             DatePickerTest { _, year, month, day ->
                 onDateChange(day, month, year)
@@ -204,7 +208,7 @@ fun EditDailyActivityContent(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Bottom
         ) {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = {
                     onUpdateActivity(
                         DailyActivity(
@@ -218,7 +222,8 @@ fun EditDailyActivityContent(
                     )
                     onNavigateToMainScreen()
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                shape = RoundedCornerShape(16.dp),
+                contentColor = MaterialTheme.colorScheme.secondary
             ) {
                 Icon(
                     imageVector = Icons.Filled.Done,
@@ -229,3 +234,33 @@ fun EditDailyActivityContent(
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun EditPreview() {
+    val text = "Test"
+
+    EditDailyActivityContent(
+        activityId = 0,
+        activityTitle = text,
+        activityType = text,
+        activityDescription = text,
+        activityTime = text,
+        activityDate = text,
+        time = 0L,
+        date = Date(),
+        onActivityTitleChange = {},
+        onActivityTypeChange = {},
+        onActivityDescriptionChange = {},
+        onActivityTimeChange = {},
+        onActivityDateChange = {},
+        onTimeChange = { hour, minute ->
+
+        },
+        onDateChange = { day, month, year ->
+
+        },
+        onUpdateActivity = {}
+    ) {
+
+    }
+}
