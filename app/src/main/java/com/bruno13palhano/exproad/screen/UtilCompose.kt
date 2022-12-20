@@ -2,6 +2,7 @@ package com.bruno13palhano.exproad.screen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.res.Resources.Theme
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.compose.foundation.Image
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColor
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
 import java.util.*
@@ -135,6 +137,7 @@ fun DatePickerTest(
 
     val mDatePickerDialog = DatePickerDialog(
         context,
+        R.style.DialogTheme,
         onChange,
         year,
         month,
@@ -181,6 +184,7 @@ fun TimePickerTest(
 
     val mTimePickerDialog = TimePickerDialog(
         context,
+        R.style.DialogTheme,
         onChange,
         hour,
         minute,
