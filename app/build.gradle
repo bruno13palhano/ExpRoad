@@ -79,6 +79,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    implementation("androidx.compose.material3:material3:1.1.0-alpha03")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.0-alpha03")
+
     implementation(project(":app:activity_repository"))
     implementation(project(":app:activity_model"))
 }
