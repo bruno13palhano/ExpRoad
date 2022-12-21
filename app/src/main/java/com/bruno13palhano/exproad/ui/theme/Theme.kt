@@ -10,7 +10,7 @@ private val DarkColorPalette = darkColorScheme(
     primary = SkyBlue,
     primaryContainer = SkyBlue,
     secondary = Teal200,
-    background = LightBrown,
+    background = Gray,
     onBackground = Black,
     onPrimary = White
 )

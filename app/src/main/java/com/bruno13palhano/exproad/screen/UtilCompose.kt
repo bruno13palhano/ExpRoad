@@ -2,7 +2,6 @@ package com.bruno13palhano.exproad.screen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.res.Resources.Theme
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.compose.foundation.Image
@@ -12,18 +11,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColor
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
 import java.util.*
@@ -80,7 +75,15 @@ fun UserInput(
         onValueChange = change,
         label = { Text(text = label) },
         keyboardOptions = keyboardOptions,
-        enabled = enable
+        enabled = enable,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.background,
+            disabledTextColor = MaterialTheme.colorScheme.onPrimary,
+            disabledIndicatorColor = MaterialTheme.colorScheme.primary,
+            disabledLabelColor = MaterialTheme.colorScheme.onPrimary,
+            disabledPlaceholderColor = MaterialTheme.colorScheme.primary
+        )
     )
 }
 
@@ -98,7 +101,10 @@ fun MessageRow(
             .height(100.dp),
         elevation = CardDefaults.outlinedCardElevation(),
         shape = RoundedCornerShape(20.dp),
-        onClick = onClick
+        onClick = onClick,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.background
+        )
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -107,11 +113,13 @@ fun MessageRow(
             Text(
                 text = dailyActivity.activityTitle,
                 modifier = Modifier.padding(4.dp),
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
             Text(
                 text = dailyActivity.activityType,
                 modifier = Modifier.padding(4.dp),
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
@@ -159,7 +167,7 @@ fun DatePickerTest(
         ) {
             Text(
                 text = stringResource(id = R.string.date_label),
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
@@ -206,7 +214,7 @@ fun TimePickerTest(
         ) {
             Text(
                 text = stringResource(id = R.string.time_label),
-                color = Color.White
+                color = MaterialTheme.colorScheme.onPrimary
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
