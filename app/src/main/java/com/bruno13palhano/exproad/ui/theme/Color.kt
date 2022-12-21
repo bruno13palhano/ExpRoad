@@ -2,7 +2,16 @@ package com.bruno13palhano.exproad.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
+val LightYellow = Color(0xFFFFFBEB)
+val LightBlue = Color(0xFF495579)
+val MediumBlue = Color(0xFF263159)
+val DarkBlue = Color(0xFF251749)
 val Teal200 = Color(0xFF03DAC5)
+val White = Color(0xFFFFFFFF)
+val Black = Color(0xFF000000)
+val Gray = Color(0xFF808080)
+val SkyBlue = Color(0xFF2192FF)
+val LightGreen = Color(0xFF38E54D)
+val GreenYellow = Color(0xFF9CFF2E)
+val MediumYellow = Color(0xFFFDFF00)
+val LightBrown = Color(0xAA735F32)
