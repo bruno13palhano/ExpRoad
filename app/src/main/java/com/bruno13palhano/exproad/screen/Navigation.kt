@@ -9,11 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.bruno13palhano.exproad.viewmodel.EditDailyActivityViewModel
-import com.bruno13palhano.exproad.viewmodel.MainScreenViewModel
-import com.bruno13palhano.exproad.viewmodel.NewDailyActivityScreenViewModel
+import androidx.navigation.compose.navArgument
 
 @Composable
 fun NavigationContent(
@@ -28,6 +24,7 @@ fun NavigationContent(
         navController = navController,
         startDestination = startDestination
     ) {
+
         composable(Routes.MAIN_SCREEN.name) {
             MainScreen(
                 context = context,
@@ -108,7 +105,12 @@ fun NavigationContent(
         composable(
             route = Routes.ANALYTICS.name
         ) {
-            Text(text = "There's nothing to see here yet on Analytics Screen.")
+            DailyActivityAnalyticsScreen(
+                context = context,
+                owner = owner,
+            ) {
+                navController.navigateUp()
+            }
         }
 
         composable(

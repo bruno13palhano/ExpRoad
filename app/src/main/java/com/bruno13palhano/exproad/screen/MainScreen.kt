@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -92,7 +93,20 @@ fun MainScreenContent(
     onNavigateToEditDailyActivityScreen: (dailyActivityId: Long) -> Unit
 ) {
 
-    LazyColumn(modifier = Modifier.padding(paddingValues)) {
+    LazyColumn(modifier = Modifier.padding(
+        top = paddingValues.calculateTopPadding(),
+        bottom = paddingValues.calculateBottomPadding(),
+        start = 4.dp,
+        end = 4.dp
+    )) {
+        item {
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+            Divider(
+                color = MaterialTheme.colorScheme.onPrimary,
+                thickness = 2.dp
+            )
+            Spacer(modifier = Modifier.padding(bottom = 8.dp))
+        }
         items(
             count = dailyActivities.size,
             key = {
@@ -106,6 +120,7 @@ fun MainScreenContent(
                         onNavigateToEditDailyActivityScreen.invoke(dailyActivity.activityId)
                     }
                 )
+                // TODO: alinhar os Texts dentro dos cards
             }
         )
     }
@@ -117,8 +132,8 @@ fun DrawerMainContent(
 ) {
     val itemList = prepareNavigationDrawerItems()
     val gradientColors = listOf(
-        Color(Color.White.value),
-        Color(androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer.value))
+        Color(MaterialTheme.colorScheme.primary.value),
+        Color(MaterialTheme.colorScheme.primaryContainer.value))
 
     LazyColumn(
         modifier = Modifier
@@ -299,6 +314,7 @@ fun DrawerMainContentMD3(
     scope: CoroutineScope,
     scrollBehavior: TopAppBarScrollBehavior
 ) {
+
     BackHandler(enabled = drawerState.isOpen) {
         scope.launch {
             drawerState.close()
@@ -310,10 +326,13 @@ fun DrawerMainContentMD3(
         drawerContent = {
             ModalDrawerSheet {
                 DrawerMainContent {
-                    onItemClick(it)
                     scope.launch {
-                        drawerState.close()
+                        if(drawerState.isOpen)
+                            drawerState.close()
+
+                        onItemClick(it)
                     }
+
                 }
             }
         },
@@ -330,7 +349,7 @@ fun DrawerMainContentMD3(
                         )
                     },
                     navigationIcon = {
-                        androidx.compose.material3.IconButton(
+                        IconButton(
                             onClick = {
                                 scope.launch {
                                     if(drawerState.isOpen) {
@@ -341,22 +360,22 @@ fun DrawerMainContentMD3(
                                 }
                             }
                         ) {
-                            androidx.compose.material3.Icon(
+                            Icon(
                                 imageVector = Icons.Filled.Menu,
                                 contentDescription = stringResource(id = R.string.drawer_menu_description)
                             )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer
+                        containerColor = MaterialTheme.colorScheme.onBackground,
                     ),
                     scrollBehavior = scrollBehavior
                 )
             },
             floatingActionButton =  {
-                androidx.compose.material3.ExtendedFloatingActionButton(
+                ExtendedFloatingActionButton(
                     onClick = onNavigateToNewDailyActivityScreen,
-                    containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Icon(
@@ -398,8 +417,12 @@ fun DrawerTest() {
                 Spacer(Modifier.height(12.dp))
                 items.forEach { item ->
                     NavigationDrawerItem(
-                        icon = { androidx.compose.material3.Icon(item, contentDescription = null) },
-                        label = { androidx.compose.material3.Text(item.name) },
+                        icon = {
+                            Icon(item, contentDescription = null)
+                        },
+                        label = {
+                            Text(item.name)
+                        },
                         selected = item == selectedItem.value,
                         onClick = {
                             scope.launch { drawerState.close() }
@@ -419,8 +442,8 @@ fun DrawerTest() {
             ) {
                 Text(text = if (drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
                 Spacer(Modifier.height(20.dp))
-                androidx.compose.material3.Button(onClick = { scope.launch { drawerState.open() } }) {
-                    androidx.compose.material3.Text("Click to open")
+                Button(onClick = { scope.launch { drawerState.open() } }) {
+                    Text("Click to open")
                 }
             }
         }
