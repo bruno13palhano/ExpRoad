@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bruno13palhano.exproad.R
 import com.bruno13palhano.activity_model.DailyActivity
@@ -50,7 +52,7 @@ fun DefaultAppBar(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.onBackground
                 )
             )
         },
@@ -99,30 +101,85 @@ fun MessageRow(
             .fillMaxHeight()
             .padding(2.dp)
             .height(100.dp),
-        elevation = CardDefaults.outlinedCardElevation(),
+        elevation = CardDefaults.outlinedCardElevation(
+            defaultElevation = 4.dp
+        ),
         shape = RoundedCornerShape(20.dp),
         onClick = onClick,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = MaterialTheme.colorScheme.onBackground
         )
     ) {
         Column(
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(2.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(96.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = dailyActivity.activityTitle,
-                modifier = Modifier.padding(4.dp),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+            Row(
+                modifier = Modifier.height(40.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Icon(
+                    modifier = Modifier.padding(
+                        top = 4.dp,
+                        end = 4.dp,
+                        bottom = 4.dp,
+                        start = 8.dp
+                    ),
+                    painter = painterResource(id = R.drawable.ic_baseline_title_24),
+                    contentDescription = "test",
+                    tint = MaterialTheme.colorScheme.primaryContainer
+                )
+                Text(
+                    text = dailyActivity.activityTitle,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    textAlign = TextAlign.Justify
+                )
+            }
+                Divider()
+            Row(
+                modifier = Modifier.height(40.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.padding(
+                        top = 4.dp,
+                        end = 4.dp,
+                        bottom = 4.dp,
+                        start = 8.dp
+                    ),
+                    painter = painterResource(id = R.drawable.ic_baseline_arrow_right_alt_24),
+                    contentDescription = "test",
+                    tint = MaterialTheme.colorScheme.primaryContainer
+                )
 
-            Text(
-                text = dailyActivity.activityType,
-                modifier = Modifier.padding(4.dp),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+                Text(
+                    text = dailyActivity.activityType,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    textAlign = TextAlign.Justify
+                )
+            }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardTest() {
+    MessageRow(
+        dailyActivity = DailyActivity(
+            activityTitle = "Java",
+            activityType = "Programming language"
+        ),
+        onClick = {}
+    )
 }
 
 @Composable
